@@ -1,4 +1,4 @@
-package mySpringframework;
+package day1.mySpringframework;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

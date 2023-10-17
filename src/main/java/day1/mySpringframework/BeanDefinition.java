@@ -1,4 +1,4 @@
-package mySpringframework;
+package day1.mySpringframework;
 
 /**
  * @Classname BeanDefinition

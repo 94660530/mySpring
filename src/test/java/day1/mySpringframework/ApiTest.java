@@ -1,6 +1,6 @@
-package mySpringframework;
+package day1.mySpringframework;
 
-import Service.UserService;
+import day1.Service.UserService;
 import org.junit.Test;
 
 /**

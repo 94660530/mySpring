@@ -1,8 +1,8 @@
-package day3.mySpringframework.beans.factory.support;
+package day4.beans.factory.support;
 
-import day3.mySpringframework.beans.BeansException;
-import day3.mySpringframework.beans.factory.BeanFactory;
-import day3.mySpringframework.beans.factory.config.BeanDefinition;
+import day4.beans.BeansException;
+import day4.beans.factory.BeanFactory;
+import day4.beans.factory.config.BeanDefinition;
 
 /**
  * @author xys
@@ -13,7 +13,7 @@ import day3.mySpringframework.beans.factory.config.BeanDefinition;
  */
 public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements BeanFactory {
     @Override
-    public Object getBean(String name, Object... args) throws BeansException{
+    public Object getBean(String name, Object... args) throws BeansException {
         Object bean = getSingleton(name);
         if (bean != null) {
             return bean;

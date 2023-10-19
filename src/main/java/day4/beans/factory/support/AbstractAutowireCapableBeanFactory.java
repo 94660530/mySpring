@@ -1,9 +1,14 @@
-package day3.mySpringframework.beans.factory.support;
+package day4.beans.factory.support;
 
-import day3.mySpringframework.beans.BeansException;
-import day3.mySpringframework.beans.factory.config.BeanDefinition;
+import day4.beans.BeansException;
+import day4.beans.PropertyValue;
+import day4.beans.PropertyValues;
+import day4.beans.factory.config.BeanDefinition;
+import day4.beans.factory.config.BeanReference;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.util.Arrays;
 
 /**
  * @author xys
@@ -20,6 +25,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         Object bean = null;
         try {
             bean = createBeanInstance(beanDefinition, beanName, args);
+            // 给 Bean 对象填充属性
+            applyPropertyValues(beanName, bean, beanDefinition);
         } catch (Exception e) {
             throw new BeansException("Instantiation of bean failed", e);
         }
@@ -39,6 +46,27 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
             }
         }
         return getInstantiationStrategy().instantiate(beanDefinition, beanName, constructorToUse, args);
+    }
+
+    protected void applyPropertyValues(String beanName, Object bean, BeanDefinition beanDefinition) throws BeansException {
+        try {
+            PropertyValues propertyValues = beanDefinition.getPropertyValues();
+            for (PropertyValue propertyValue : propertyValues.getPropertyValues()) {
+                String name = propertyValue.getName();
+                Object value = propertyValue.getValue();
+
+                if (value instanceof BeanReference) {
+                    BeanReference beanReference = (BeanReference) value;
+                    value = getBean(beanReference.getBeanName());
+                }
+
+                Field field = bean.getClass().getDeclaredField(name);
+                field.setAccessible(true);
+                field.set(bean, value);
+            }
+        } catch (Exception e) {
+            throw new BeansException("Error setting property values: " + beanName);
+        }
     }
 
     protected abstract BeanDefinition getBeanDefinition(String beanName) throws BeansException;

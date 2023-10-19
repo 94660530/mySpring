@@ -1,6 +1,6 @@
-package day3.mySpringframework.beans.factory;
+package day4.beans.factory;
 
-import day3.mySpringframework.beans.BeansException;
+import day4.beans.BeansException;
 
 /**
  * @author xys
@@ -10,6 +10,5 @@ import day3.mySpringframework.beans.BeansException;
  * @Date 2023/10/17 1:06
  */
 public interface BeanFactory {
-
     public Object getBean(String name, Object... args) throws BeansException;
 }
